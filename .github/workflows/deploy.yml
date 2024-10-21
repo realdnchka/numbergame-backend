@@ -22,7 +22,7 @@ jobs:
       - name: Get google secrets
         env:
           DATA: ${{ secrets.FIRESTORE }}
-        run: echo $DATA | base64 -di > firestore.json
+        run: base64 -i $DATA -o firestore.json
 
       - id: "auth"
         uses: google-github-actions/auth@v2
