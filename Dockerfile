@@ -15,6 +15,5 @@ RUN set -x && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -
     rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/server /app/server
-EXPOSE 80
 
 CMD ["/app/server"]
