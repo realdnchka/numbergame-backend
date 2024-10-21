@@ -7,4 +7,4 @@ RUN go mod download
 
 COPY . ./
 
-ENTRYPOINT [ "go run main.go -v" ]
+ENTRYPOINT [ "go run /app/main.go -v" ]
