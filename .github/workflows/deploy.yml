@@ -34,7 +34,7 @@ jobs:
         env:
           DATA: ${{ secrets.FIRESTORE }}
         run: |-
-          echo $DATA | base64 -di > firestore.json && docker buildx build --platform linux/amd64 --tag $REGION-docker.pkg.dev/$PROJECT_ID/$REGISTRY_NAME/$APP_NAME:$GITHUB_SHA
+          echo $DATA | base64 -di > firestore.json && docker buildx build --platform linux/amd64 -t $REGION-docker.pkg.dev/$PROJECT_ID/$REGISTRY_NAME/$APP_NAME:$GITHUB_SHA .
       
       - name: Push the image to the Google Artifact Registry (GAR)
         run: |-
