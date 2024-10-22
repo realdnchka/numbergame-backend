@@ -1,4 +1,4 @@
-FROM golang:1.23.2-bookworm as builder
+FROM golang:1.23.2-alpine
 
 WORKDIR /app
 
@@ -6,5 +6,6 @@ COPY go.* ./
 RUN go mod download
 
 COPY . ./
+RUN ls
 
-ENTRYPOINT [ "go run main.go" ]
+CMD [ "go run main.go" ]
