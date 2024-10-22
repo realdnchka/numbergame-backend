@@ -1,10 +1,16 @@
-FROM golang:1.23.2-bookworm as builder
+FROM golang:1.23.2-alpine as builder
 
 WORKDIR /app
 
-COPY go.* ./
+COPY go.* .
 RUN go mod download
 
-COPY . ./
+COPY . .
 
-ENTRYPOINT [ "go run /app/main.go -v" ]
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o server .
+
+FROM alpine:latest
+COPY --from=builder /app/server /app/server
+EXPOSE 80
+
+CMD [ "/app/server" ]
