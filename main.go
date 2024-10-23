@@ -15,12 +15,12 @@ func init() {
 }
 
 func main() {
-	http.HandleFunc("/getNumbers", utils.Logging(endpoints.GetNumbers))
-	http.HandleFunc("/createUser", utils.Logging(endpoints.CreateUser))
+	http.HandleFunc("/getNumbers", utils.Logging(utils.ApiKey(endpoints.GetNumbers)))
+	http.HandleFunc("/createUser", utils.Logging(utils.ApiKey(endpoints.CreateUser)))
 	
 	port := os.Getenv("PORT")
     if port == "" {
-            port = "80"
+        port = "80"
     }
 	http.ListenAndServe(":" + port, nil)
 }
