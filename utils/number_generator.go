@@ -8,15 +8,22 @@ func GenerateNumbers(totalNumbers int) ([]int, int) {
 	var numbers []int
 	sum := 0
 	
-	//Generates 'n' numbers
-	for i:= 0; i < totalNumbers; i++ {
-		num := rand.IntN(50) + 1
-		numbers = append(numbers, num)
-	}
-	
-	//Generates random sum from numbers
-	for i:= 0; i < rand.IntN(totalNumbers - 2) + 2; i++ {
-		sum += numbers[i]
+	for sum < 10 {
+		//Generates 'n' numbers
+		for i:= 0; i < totalNumbers; i++ {
+			num := rand.IntN(50) + 1
+			numbers = append(numbers, num)
+		}
+		
+		//Generates random sum from numbers
+		for i:= 0; i < rand.IntN(totalNumbers - 2) + 2; i++ {
+			sum += numbers[i]
+		}
+		
+		if sum < 10 {
+			sum = 0
+			numbers = nil
+		}
 	}
 	
 	//Remove one solution variants
