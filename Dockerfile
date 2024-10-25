@@ -11,6 +11,8 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o server .
 
 FROM alpine:latest
 COPY --from=builder /app/server /app/server
+
 EXPOSE 80
+ENV APP_ENV=PROD
 
 CMD [ "/app/server" ]

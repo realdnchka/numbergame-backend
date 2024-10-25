@@ -4,8 +4,10 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"os"
+
 	secretmanager "cloud.google.com/go/secretmanager/apiv1"
-    "cloud.google.com/go/secretmanager/apiv1/secretmanagerpb"
+	"cloud.google.com/go/secretmanager/apiv1/secretmanagerpb"
 )
 
 func getSecret() [] byte{
@@ -30,11 +32,13 @@ func getSecret() [] byte{
 
 func ApiKey(f http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		apiKey := r.Header.Get("Authorization")
-		
-		if apiKey != string(getSecret())  {
-			http.Error(w, "Forbidden", http.StatusForbidden)
-			return
+		if os.Getenv("APP_ENV") == "PROD" {
+			apiKey := r.Header.Get("Authorization")
+			
+			if apiKey != string(getSecret())  {
+				http.Error(w, "Forbidden", http.StatusForbidden)
+				return
+			}
 		}
 		
 		f(w, r)
