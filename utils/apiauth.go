@@ -31,7 +31,7 @@ func getSecret() [] byte{
 func ApiKey(f http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		apiKey := r.Header.Get("Authorization")
-		log.Printf("Secret is: %v", string(getSecret()))
+		
 		if apiKey != string(getSecret())  {
 			http.Error(w, "Forbidden", http.StatusForbidden)
 			return
