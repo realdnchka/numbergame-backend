@@ -6,7 +6,6 @@ import (
 	"numbergame/backend/utils"
 	"time"
 	"encoding/base64"
-		"google.golang.org/api/iterator"
 )
 
 func UserCreate(w http.ResponseWriter, r *http.Request) {
