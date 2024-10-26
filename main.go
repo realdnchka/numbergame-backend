@@ -20,6 +20,7 @@ func main() {
 	http.HandleFunc("/userLogin", utils.Logging(utils.ApiKey(endpoints.UserLogin)))
 	http.HandleFunc("/sendScore", utils.Logging(utils.ApiKey(endpoints.SendScore)))
 	http.HandleFunc("/userGetData", utils.Logging(utils.ApiKey(endpoints.UserGetData)))
+	http.HandleFunc("/getLeaderboard", utils.Logging(utils.ApiKey(endpoints.GetLeaderboard)))
 	
 	http.ListenAndServe(":80", nil)
 }
