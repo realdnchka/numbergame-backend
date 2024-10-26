@@ -6,7 +6,6 @@ import (
 	"numbergame/backend/utils"
 	"time"
 	"encoding/base64"
-		"google.golang.org/api/iterator"
 )
 
 func UserCreate(w http.ResponseWriter, r *http.Request) {
@@ -23,30 +22,15 @@ func UserCreate(w http.ResponseWriter, r *http.Request) {
         http.Error(w, "Name is required", http.StatusBadRequest)
         return
     }
-    iter := utils.Client.Collection("users").Where("username", "==", user.Name).Limit(1).Documents(ctx)
-	defer iter.Stop()
-	
-    exists := false
-	for {
-		_, err := iter.Next()
-		if err == iterator.Done {
-			break
-		}
-		if err != nil {
-			http.Error(w, "Database error", http.StatusInternalServerError)
-			return
-		}
-		exists = true
-		break
-	}
     
-	if exists {
-		http.Error(w, "Name is already taken", http.StatusForbidden)
-		return
-	}
+    _, err = utils.Client.Collection("users").Doc(user.Name).Get(ctx)
+    if err == nil {
+       	http.Error(w, "Name is already taken", http.StatusForbidden)
+      	return
+    }
     
     user.Token = EncodeToken(user.Name)
-	utils.Client.Collection("users").NewDoc().Set(ctx, map[string]interface{}{
+	utils.Client.Collection("users").Doc(user.Name).Set(ctx, map[string]interface{}{
 				"username": user.Name,
 		        "highscore": 0,
 		        "totalscores":  0,
