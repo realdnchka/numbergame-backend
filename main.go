@@ -18,6 +18,8 @@ func main() {
 	http.HandleFunc("/userCreate", utils.Logging(utils.ApiKey(endpoints.UserCreate)))
 	http.HandleFunc("/isNameTaken", utils.Logging(utils.ApiKey(endpoints.IsNameTaken)))
 	http.HandleFunc("/userLogin", utils.Logging(utils.ApiKey(endpoints.UserLogin)))
+	http.HandleFunc("/sendScore", utils.Logging(utils.ApiKey(endpoints.SendScore)))
+	http.HandleFunc("/userGetData", utils.Logging(utils.ApiKey(endpoints.UserGetData)))
 	
 	http.ListenAndServe(":80", nil)
 }
