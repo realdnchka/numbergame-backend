@@ -22,15 +22,16 @@ func UserCreate(w http.ResponseWriter, r *http.Request) {
         http.Error(w, "Name is required", http.StatusBadRequest)
         return
     }
-	
+    
     _, err = utils.Client.Collection("users").Doc(user.Name).Get(ctx)
     if err == nil {
-    	http.Error(w, "Name is already taken", http.StatusForbidden)
-     	return
+       	http.Error(w, "Name is already taken", http.StatusForbidden)
+      	return
     }
     
     user.Token = EncodeToken(user.Name)
 	utils.Client.Collection("users").Doc(user.Name).Set(ctx, map[string]interface{}{
+				"username": user.Name,
 		        "highscore": 0,
 		        "totalscores":  0,
 				"token": user.Token,

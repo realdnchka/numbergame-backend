@@ -16,3 +16,8 @@ type User struct {
 type UserRegisterResponse struct {
 	Token string `json:"token"`
 }
+
+type LeaderboardEntry struct {
+	Username string `json:"username"`
+	Highscore int `json:"highscore"`
+}
