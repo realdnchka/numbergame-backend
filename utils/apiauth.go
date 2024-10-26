@@ -10,18 +10,18 @@ import (
 	"cloud.google.com/go/secretmanager/apiv1/secretmanagerpb"
 )
 
-func getSecret() [] byte{
+func getSecret() []byte {
 	ctx := context.Background()
 	client, err := secretmanager.NewClient(ctx)
 	if err != nil {
 		log.Fatalf("\nCannot setup client: %v", err)
 	}
 	defer client.Close()
-	
+
 	accessRequest := &secretmanagerpb.AccessSecretVersionRequest{
-                Name: "projects/862600208132/secrets/api-key-auth-go/versions/1",
+		Name: "projects/862600208132/secrets/api-key-auth-go/versions/1",
 	}
-    
+
 	result, err := client.AccessSecretVersion(ctx, accessRequest)
 	if err != nil {
 		log.Fatalf("\nCannot access to secret: %v", err)
@@ -34,13 +34,13 @@ func ApiKey(f http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if os.Getenv("APP_ENV") == "PROD" {
 			apiKey := r.Header.Get("Authorization")
-			
-			if apiKey != string(getSecret())  {
+
+			if apiKey != string(getSecret()) {
 				http.Error(w, "Forbidden", http.StatusForbidden)
 				return
 			}
 		}
-		
+
 		f(w, r)
 	}
 }

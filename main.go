@@ -15,7 +15,9 @@ func init() {
 
 func main() {
 	http.HandleFunc("/getNumbers", utils.Logging(utils.ApiKey(endpoints.GetNumbers)))
-	http.HandleFunc("/createUser", utils.Logging(utils.ApiKey(endpoints.CreateUser)))
+	http.HandleFunc("/userCreate", utils.Logging(utils.ApiKey(endpoints.UserCreate)))
+	http.HandleFunc("/isNameTaken", utils.Logging(utils.ApiKey(endpoints.IsNameTaken)))
+	http.HandleFunc("/userLogin", utils.Logging(utils.ApiKey(endpoints.UserLogin)))
 	
 	http.ListenAndServe(":80", nil)
 }
