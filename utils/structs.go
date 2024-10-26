@@ -10,4 +10,9 @@ type User struct {
 	Name string `json:"username"`
 	HighScore int `json:"highscore"`
 	TotalScores int `json:"total_scores"`
+	Token string `json:"token"`
+}
+
+type UserRegisterResponse struct {
+	Token string `json:"token"`
 }
